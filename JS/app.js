@@ -14,15 +14,15 @@ function AddTask() {
         let span = document.createElement("span");
         span.innerHTML = "\u00d7";
         li.appendChild(span);
-
     }
+    saveData()
 }
 
 // Add event listener for the "keydown" event on the input box
 inputBox.addEventListener("keydown", function (event) {
     if (event.key == 'Enter') {
         AddTask()
-
+        saveData()
     }
 })
 
@@ -30,7 +30,21 @@ inputBox.addEventListener("keydown", function (event) {
 listContainer.addEventListener("click", function(e){
     if(e.target.tagName=== "LI"){
         e.target.classList.toggle("checked");
+        saveData()
     }else if(e.target.tagName=== "SPAN"){
         e.target.parentElement.remove();
+        saveData()
     }
-})
+}, false)
+
+
+// local storage or save data
+function saveData(){
+    localStorage.setItem("data", listContainer.innerHTML)
+}
+
+
+function showTask(){
+    listContainer.innerHTML = localStorage.getItem("data");
+}
+showTask()
